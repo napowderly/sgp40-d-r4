@@ -1,2 +1,43 @@
-module Sgp40DR4:
-    signal gnd
+import Power from "generics/interfaces.ato"
+import I2C from "generics/interfaces.ato"
+import Capacitor from "generics/capacitors.ato"
+
+component _SGP40_D_R4:
+    # component SGP40-D-R4
+    footprint = "DFN-6_L2.4-W2.4-P0.80-TL-EP"
+    lcsc_id = "C2874215"
+    mpn = "C2874215"
+    # pins
+    signal VDD ~ pin 1
+    signal VSS ~ pin 2
+    signal SDA ~ pin 3
+    signal n_a ~ pin 4
+    signal VDDH ~ pin 5
+    signal SCL ~ pin 6
+    signal GND ~ pin 7
+
+module SGP40_D_R4:
+    ic = new _SGP40_D_R4
+    power = new Power
+    i2c = new I2C
+
+    # Power
+    power.vcc ~ ic.VDD
+    power.vcc ~ ic.VDDH
+    power.gnd ~ ic.VSS
+    power.gnd ~ ic.n_a
+    power.gnd ~ ic.GND
+
+    input_cap_1 = new Capacitor
+    input_cap_1.power ~ power
+    input_cap_1.value = 1uF +/- 20%
+    input_cap_1.package = "0402"
+
+    input_cap_2 = new Capacitor
+    input_cap_2.power ~ power
+    input_cap_2.value = 1uF +/- 20%
+    input_cap_2.package = "0402"
+
+    # I2C
+    i2c.sda ~ ic.SDA
+    i2c.scl ~ ic.SCL
