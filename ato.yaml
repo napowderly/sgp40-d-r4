@@ -1,6 +1,6 @@
 ato-version: ^0.2.0
 builds:
   default:
-    entry: elec/src/sgp40-d-r4.ato:Sgp40DR4
+    entry: elec/src/sgp40-d-r4.ato:SGP40_D_R4
 dependencies:
 - generics
